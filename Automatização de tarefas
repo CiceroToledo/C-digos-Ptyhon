@@ -1,0 +1,32 @@
+import smtplib
+import email.message
+
+def enviar_email():  
+    corpo_email = """
+    <p>Prezados, boa tarde</p>
+    <p>Segue orientações sobre o fluxo de manifestações das Ouvidoria-Locais</p>
+    <p>Os formulários de manifestação, devem estar disponíveis, para acesso fácil aos usuários</p>
+    <p>Verificação semanal ou mensal (a depender do fluxo de manifestações), do recebimento de demandas</p>
+    <p>Os dados de contatos da Ouvidoria SUS, devem estar expostos, para conhecimento dos usuários</p>
+    <p>O recolhimento das manifestações será de forma gradual</p>
+    <p>Att</p>
+    <p>Ouvidoria SUS Arapiraca</p>
+    <p>Endereço rua José Jaílson Nunes S/n (prédio do CRIA), bairro Santa Edwirges, Arapiraca-AL</p>
+    <p>Telefone: 0800 282 3331 e 3521-1064</p>
+
+    """
+
+    msg = email.message.Message()
+    msg['Subject'] = "Orientações/Fluxo de recebimento-encaminhamento/Ouvidorias Locais"
+    msg['From'] = 'ouvidoriasus@saude.arapiraca.al.gov.br'
+    msg['To'] = 'ouvidoriasusarapiraca@hotmail.com,ouvidoriasus@saude.arapiraca.al.gov.br,ub3centro@saude.arapiraca.al.gov.br,ubcohabnova@saude.arapiraca.al.gov.br,ubprimavera@saude.arapiraca.al.gov.br,capsad@saude.arapiraca.al.gov.br,prontoatendimento@saude.arapiraca.al.gov.br'
+    password = 'ouvidoriasaude2021' 
+    msg.add_header('Content-Type', 'text/html')
+    msg.set_payload(corpo_email )
+
+    s = smtplib.SMTP('smtp.gmail.com: 587')
+    s.starttls()
+    # Login Credentials for sending the mail
+    s.login(msg['From'], password)
+    s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+    print('Email enviado')
